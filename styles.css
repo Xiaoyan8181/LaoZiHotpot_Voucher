@@ -8,20 +8,20 @@ body {
 }
 
 .container {
-  background-color: #3a3f44; /* 深色容器背景 Панель, що гармонує з фоном сторінки */
+  background-color: #3a3f44; /* 深色容器背景，與頁面協調 */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Злегка темніша тінь */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 略深的陰影 */
 }
 
 h1, h2, h3, h4 {
-  color: #f0f0f0; /* Заголовки у світло-сірому кольорі */
+  color: #f0f0f0; /* 標題使用更亮的灰白色 */
 }
 
 button {
   padding: 10px 20px;
   margin: 10px 0;
-  background-color: #ff6f61; /* Зберігаємо оригінальний червоний колір кнопок */
+  background-color: #ff6f61; /* 保留原有紅色按鈕 */
   color: white;
   border: none;
   border-radius: 5px;
@@ -29,12 +29,12 @@ button {
 }
 
 button:disabled {
-  background-color: #666; /* Темно-сірий для неактивних кнопок */
+  background-color: #666; /* 禁用按鈕使用深灰色 */
   cursor: not-allowed;
 }
 
 button:hover:not(:disabled) {
-  background-color: #e65b50; /* Темніший червоний при наведенні */
+  background-color: #e65b50; /* 懸停時略深紅色 */
 }
 
 select {
@@ -42,19 +42,19 @@ select {
   margin: 10px 0;
   width: 100%;
   border-radius: 5px;
-  border: 1px solid #555; /* Темна рамка */
-  background-color: #4a4f55; /* Темніший фон для меню */
-  color: #e0e0e0; /* Світло-сірий текст у меню */
+  border: 1px solid #555; /* 深色邊框 */
+  background-color: #4a4f55; /* 選單背景略深 */
+  color: #e0e0e0; /* 選單文字淺灰 */
 }
 
 select option {
-  background-color: #4a4f55; /* Фон для варіантів у спадному меню */
+  background-color: #4a4f55; /* 下拉選項背景 */
   color: #e0e0e0;
 }
 
 select option:disabled {
   font-weight: bold;
-  color: #999; /* Середньо-сірий для відключених варіантів (заголовків) */
+  color: #999; /* 禁用選項（分隔標題）使用中灰色 */
 }
 
 .hidden {
@@ -68,16 +68,21 @@ ul {
 
 li {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* 垂直排列，支援換行 */
+  align-items: flex-start; /* 左對齊 */
   padding: 10px;
-  border-bottom: 1px solid #555; /* Темна роздільна лінія */
+  border-bottom: 1px solid #555; /* 深色分隔線 */
+}
+
+li > div {
+  margin: 2px 0; /* 每行間距 */
 }
 
 .delete-btn {
   background-color: #dc3545;
   padding: 5px 10px;
   font-size: 14px;
+  align-self: flex-end; /* 刪除按鈕右對齊 */
 }
 
 .delete-btn:hover {
@@ -90,4 +95,8 @@ li {
 
 #clearOrdersBtn:hover {
   background-color: #5a6268;
+}
+
+.highlight {
+  color: #ff6f61; /* 紅色高亮，與按鈕一致 */
 }

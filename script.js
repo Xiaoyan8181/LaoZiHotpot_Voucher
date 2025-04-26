@@ -200,13 +200,35 @@ document.addEventListener('DOMContentLoaded', () => {
         orderList.appendChild(header);
         catOrders.forEach(order => {
           const li = document.createElement('li');
-          let text = `${order.meal}`;
-          if (order.soup) text += ` | 湯底: ${order.soup}`;
-          if (order.soup2) text += ` | 第二鍋湯底: ${order.soup2}`;
-          if (order.main) text += ` | 主食: ${order.main}`;
-          if (order.gift) text += ` | 贈品: ${order.gift}`;
-          if (order.extra) text += ` | 兌換: ${order.extra}`;
-          li.textContent = text;
+          const mealDiv = document.createElement('div');
+          mealDiv.textContent = order.meal;
+          li.appendChild(mealDiv);
+
+          if (order.soup) {
+            const soupDiv = document.createElement('div');
+            soupDiv.innerHTML = `湯底: <span class="highlight">${order.soup}</span>`;
+            li.appendChild(soupDiv);
+          }
+          if (order.soup2) {
+            const soup2Div = document.createElement('div');
+            soup2Div.innerHTML = `第二鍋湯底: <span class="highlight">${order.soup2}</span>`;
+            li.appendChild(soup2Div);
+          }
+          if (order.main) {
+            const mainDiv = document.createElement('div');
+            mainDiv.innerHTML = `主食: <span class="highlight">${order.main}</span>`;
+            li.appendChild(mainDiv);
+          }
+          if (order.gift) {
+            const giftDiv = document.createElement('div');
+            giftDiv.innerHTML = `贈品: <span class="highlight">${order.gift}</span>`;
+            li.appendChild(giftDiv);
+          }
+          if (order.extra) {
+            const extraDiv = document.createElement('div');
+            extraDiv.innerHTML = `兌換: <span class="highlight">${order.extra}</span>`;
+            li.appendChild(extraDiv);
+          }
 
           const deleteBtn = document.createElement('button');
           deleteBtn.textContent = '刪除';
