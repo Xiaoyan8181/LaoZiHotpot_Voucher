@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #2c2f33; /* 深灰藍背景，柔和不刺眼 */
+  color: #e0e0e0; /* 淺灰文字，增加對比 */
+}
+
+.container {
+  background-color: #3a3f44; /* 深色容器背景 Панель, що гармонує з фоном сторінки */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Злегка темніша тінь */
+}
+
+h1, h2, h3, h4 {
+  color: #f0f0f0; /* Заголовки у світло-сірому кольорі */
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  background-color: #ff6f61; /* Зберігаємо оригінальний червоний колір кнопок */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #666; /* Темно-сірий для неактивних кнопок */
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #e65b50; /* Темніший червоний при наведенні */
+}
+
+select {
+  padding: 8px;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #555; /* Темна рамка */
+  background-color: #4a4f55; /* Темніший фон для меню */
+  color: #e0e0e0; /* Світло-сірий текст у меню */
+}
+
+select option {
+  background-color: #4a4f55; /* Фон для варіантів у спадному меню */
+  color: #e0e0e0;
+}
+
+select option:disabled {
+  font-weight: bold;
+  color: #999; /* Середньо-сірий для відключених варіантів (заголовків) */
+}
+
+.hidden {
+  display: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #555; /* Темна роздільна лінія */
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+#clearOrdersBtn {
+  background-color: #6c757d;
+}
+
+#clearOrdersBtn:hover {
+  background-color: #5a6268;
+}

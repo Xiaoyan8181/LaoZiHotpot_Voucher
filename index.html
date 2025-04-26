@@ -1,0 +1,114 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>荖子鍋點餐系統</title>
+  <link rel="icon" type="image/png" href="LZHotPot.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>荖子鍋點餐系統</h1>
+    <button id="addMealBtn">新增餐點</button>
+    <div id="mealForm" class="hidden">
+      <h3>選擇餐點</h3>
+      <select id="mealType">
+        <option value="">請選擇餐點</option>
+        <option value="main" disabled>---主餐---</option>
+        <option value="428">428 OMG經典套餐火鍋券</option>
+        <option value="438">438真襄經典套餐火鍋券</option>
+        <option value="438gift">438真襄經典套餐火鍋券贈豬肉片或海鮮乙盤</option>
+        <option value="548">548 OMG豪華套餐火鍋券</option>
+        <option value="548gift">548 OMG豪華套餐火鍋券_贈肉品海鮮好禮四選一</option>
+        <option value="558">558真襄豪華套餐火鍋券</option>
+        <option value="1988">OMG與您襄愛在一起必點龍王火鍋套餐券1988加贈頂級好禮三選一</option>
+        <option value="gift" disabled>---禮物券---</option>
+        <option value="meat">肉品五選一兌換券</option>
+        <option value="abalone">鮑魚白蝦兌換券</option>
+        <option value="points" disabled>---點數兌換---</option>
+        <option value="3points">3點</option>
+        <option value="5points">5點</option>
+        <option value="8points">8點</option>
+        <option value="10points">10點</option>
+        <option value="15points">15點</option>
+        <option value="20points">20點</option>
+      </select>
+      <div id="soupBaseSection" class="hidden">
+        <h4>湯底</h4>
+        <select id="soupBase">
+          <option value="">請選擇湯底</option>
+        </select>
+      </div>
+      <div id="soupBase2Section" class="hidden">
+        <h4>第二鍋湯底</h4>
+        <select id="soupBase2">
+          <option value="">請選擇第二鍋湯底</option>
+        </select>
+      </div>
+      <div id="mainDishSection" class="hidden">
+        <h4>主食</h4>
+        <select id="mainDish">
+          <option value="">請選擇主食</option>
+        </select>
+      </div>
+      <div id="giftSection" class="hidden">
+        <h4>贈品</h4>
+        <select id="gift">
+          <option value="">請選擇贈品</option>
+        </select>
+      </div>
+      <div id="extraSection" class="hidden">
+        <h4>兌換選項</h4>
+        <select id="extra">
+          <option value="">請選擇兌換選項</option>
+        </select>
+      </div>
+      <button id="confirmBtn" disabled>確認新增</button>
+    </div>
+    <h2>訂單列表</h2>
+    <ul id="orderList"></ul>
+    <button id="clearOrdersBtn" class="hidden">清空餐點</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
