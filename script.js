@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
       isValid = isValid && extra.value !== '';
     } else if (mealType.value === 'abalone') {
       isValid = true;
-    } else if (['3points', '5points', '8points', '10points', '15points', '20points'].includes(mealValue)) {
+    } else if (['3points', '5points', '8points', '10points', '15points', '20points'].includes(mealType.value)) {
       isValid = isValid && extra.value !== '';
     }
     confirmBtn.disabled = !isValid;
