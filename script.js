@@ -30,18 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
     mainDish.innerHTML = '<option value="">請選擇主食</option>';
     gift.innerHTML = '<option value="">請選擇贈品</option>';
 
-    if (mealType.value === '428' || mealType.value === '438') {
+    if (mealType.value === '428' || mealType.value === '428gift') {
       soupBaseSection.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
-      addOptions(soupBase, mealType.value === '428' ? ['豬肚', '酸菜魚'] : ['麻辣', '牛奶']);
+      if (mealType.value === '428gift') {
+        giftSection.classList.remove('hidden');
+        addOptions(gift, ['梅花豬100克', '豬五花100克', '花枝漿', '鯛魚片']);
+      }
+      addOptions(soupBase, ['豬肚', '酸菜魚']);
       addOptions(mainDish, ['梅花豬120克', '豬五花120克', '牛五花100克']);
-    } else if (mealType.value === '438gift') {
+    } else if (mealType.value === '438' || mealType.value === '438gift') {
       soupBaseSection.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
-      giftSection.classList.remove('hidden');
+      if (mealType.value === '438gift') {
+        giftSection.classList.remove('hidden');
+        addOptions(gift, ['梅花豬100克', '豬五花100克', '花枝漿', '鯛魚片']);
+      }
       addOptions(soupBase, ['麻辣', '牛奶']);
       addOptions(mainDish, ['梅花豬120克', '豬五花120克', '牛五花100克']);
-      addOptions(gift, ['梅花豬100克', '豬五花100克', '花枝漿', '鯛魚片']);
     } else if (mealType.value === '548' || mealType.value === '548gift' || mealType.value === '558') {
       soupBaseSection.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getCategory(mealValue) {
-    if (['428', '438', '438gift', '548', '548gift', '558', '1988'].includes(mealValue)) return 'main';
+    if (['428', '428gift', '438', '438gift', '548', '548gift', '558', '1988'].includes(mealValue)) return 'main';
     if (['meat', 'abalone'].includes(mealValue)) return 'gift';
     if (['3points', '5points', '8points', '10points', '15points', '20points'].includes(mealValue)) return 'points';
     return '';
@@ -168,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (['428', '438', '548', '558'].includes(mealType.value)) {
       isValid = isValid && soupBase.value !== '' && mainDish.value !== '';
-    } else if (['438gift', '548gift'].includes(mealType.value)) {
+    } else if (['428gift', '438gift', '548gift'].includes(mealType.value)) {
       isValid = isValid && soupBase.value !== '' && mainDish.value !== '' && gift.value !== '';
     } else if (mealType.value === '1988') {
       isValid = isValid && soupBase.value !== '' && soupBase2.value !== '' && gift.value !== '';
@@ -176,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
       isValid = isValid && extra.value !== '';
     } else if (mealType.value === 'abalone') {
       isValid = true;
-    } else if (['3points', '5points', '8points', '10points', '15points', '20points'].includes(mealType.value)) {
+    } else if (['3points', '5points', '8points', '10points', '15points', '20points'].includes(mealValue)) {
       isValid = isValid && extra.value !== '';
     }
     confirmBtn.disabled = !isValid;
