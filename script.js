@@ -48,14 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       addOptions(soupBase, ['麻辣', '牛奶']);
       addOptions(mainDish, ['梅花豬120克', '豬五花120克', '牛五花100克']);
-    } else if (mealType.value === '548' || mealType.value === '548gift' || mealType.value === '558') {
+    } else if (mealType.value === '548' || mealType.value === '548gift' || mealType.value === '558' || mealType.value === '558gift') {
       soupBaseSection.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
-      if (mealType.value === '548gift') {
+      if (mealType.value === '548gift' || mealType.value === '558gift') {
         giftSection.classList.remove('hidden');
         addOptions(gift, ['梅花豬100克', '豬五花100克', '花枝漿', '鯛魚片']);
       }
-      addOptions(soupBase, mealType.value === '558' ? ['麻辣', '牛奶'] : ['豬肚', '酸菜魚']);
+      addOptions(soupBase, mealType.value === '558' || mealType.value === '558gift' ? ['麻辣', '牛奶'] : ['豬肚', '酸菜魚']);
       addOptions(mainDish, ['板腱牛120克', '沙朗牛120克', '松阪豬120克', '小羔羊120克']);
     } else if (mealType.value === '1988') {
       soupBaseSection.classList.remove('hidden');
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getCategory(mealValue) {
-    if (['428', '428gift', '438', '438gift', '548', '548gift', '558', '1988'].includes(mealValue)) return 'main';
+    if (['428', '428gift', '438', '438gift', '548', '548gift', '558', '558gift', '1988'].includes(mealValue)) return 'main';
     if (['meat', 'abalone'].includes(mealValue)) return 'gift';
     if (['3points', '5points', '8points', '10points', '15points', '20points'].includes(mealValue)) return 'points';
     return '';
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (['428', '438', '548', '558'].includes(mealType.value)) {
       isValid = isValid && soupBase.value !== '' && mainDish.value !== '';
-    } else if (['428gift', '438gift', '548gift'].includes(mealType.value)) {
+    } else if (['428gift', '438gift', '548gift', '558gift'].includes(mealType.value)) {
       isValid = isValid && soupBase.value !== '' && mainDish.value !== '' && gift.value !== '';
     } else if (mealType.value === '1988') {
       isValid = isValid && soupBase.value !== '' && soupBase2.value !== '' && gift.value !== '';
