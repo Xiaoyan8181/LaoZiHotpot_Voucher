@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainDish2 = document.getElementById('mainDish2');
   const giftSection = document.getElementById('giftSection');
   const gift = document.getElementById('gift');
+  // 新增第二個贈品的元素
+  const gift2Section = document.getElementById('gift2Section');
+  const gift2 = document.getElementById('gift2');
   const extraSection = document.getElementById('extraSection');
   const extra = document.getElementById('extra');
   const confirmBtn = document.getElementById('confirmBtn');
@@ -32,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainDish.innerHTML = '<option value="">請選擇主食</option>';
     mainDish2.innerHTML = '<option value="">請選擇主食</option>';
     gift.innerHTML = '<option value="">請選擇贈品</option>';
+    gift2.innerHTML = '<option value="">請選擇贈品</option>'; // 重置第二贈品
 
     if (mealType.value === '428' || mealType.value === '428gift') {
       soupBaseSection.classList.remove('hidden');
@@ -42,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       addOptions(soupBase, ['豬肚', '酸菜魚']);
       addOptions(mainDish, ['梅花豬120克', '豬五花120克', '牛五花100克']);
-      mainDish.disabled = false; // 確保主食一可選
+      mainDish.disabled = false;
     } else if (mealType.value === '438' || mealType.value === '438gift') {
       soupBaseSection.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
@@ -52,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       addOptions(soupBase, ['麻辣', '牛奶']);
       addOptions(mainDish, ['梅花豬120克', '豬五花120克', '牛五花100克']);
-      mainDish.disabled = false; // 確保主食一可選
+      mainDish.disabled = false;
     } else if (mealType.value === '548' || mealType.value === '548gift' || mealType.value === '558' || mealType.value === '558gift') {
       soupBaseSection.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       addOptions(soupBase, mealType.value === '558' || mealType.value === '558gift' ? ['麻辣', '牛奶'] : ['豬肚', '酸菜魚']);
       addOptions(mainDish, ['板腱牛120克', '沙朗牛120克', '松阪豬120克', '小羔羊120克']);
-      mainDish.disabled = false; // 確保主食一可選
+      mainDish.disabled = false;
     } else if (mealType.value === '1988') {
       soupBaseSection.classList.remove('hidden');
       soupBase2Section.classList.remove('hidden');
@@ -70,22 +74,24 @@ document.addEventListener('DOMContentLoaded', () => {
       mainDishSection.classList.remove('hidden');
       addOptions(soupBase, ['和風', '蔬食']);
       addOptions(soupBase2, ['和風', '蔬食']);
-      // 1988 套餐的主食是固定且不可更改的
       mainDish.innerHTML = '<option value="龍王綜合海鮮乙盤 + 牛小排150g乙盤" selected>龍王綜合海鮮乙盤 + 牛小排150g乙盤</option>';
       mainDish.disabled = true;
       addOptions(gift, ['板腱牛100克', '松阪豬100克', '蝦滑乙支']);
-    } else if (mealType.value === 'omg_set') { // 新增的 OMG 套餐邏輯
+    } else if (mealType.value === 'omg_set') {
       soupBaseSection.classList.remove('hidden');
       soupBase2Section.classList.remove('hidden');
       mainDishSection.classList.remove('hidden');
       mainDish2Section.classList.remove('hidden');
       giftSection.classList.remove('hidden');
+      gift2Section.classList.remove('hidden'); // 顯示第二贈品區塊
       addOptions(soupBase, ['和風', '蔬食', '剝皮辣椒']);
       addOptions(soupBase2, ['和風', '蔬食', '剝皮辣椒']);
       addOptions(mainDish, ['梅花豬', '牛五花', '鮮魚雙拼']);
-      mainDish.disabled = false; // OMG 套餐主食一可選
+      mainDish.disabled = false;
       addOptions(mainDish2, ['梅花豬', '牛五花', '鮮魚雙拼']);
-      addOptions(gift, ['牛五花(80g)', '梅花豬(80g)', '白蝦']);
+      const giftOptions = ['牛五花(80g)', '梅花豬(80g)', '白蝦'];
+      addOptions(gift, giftOptions); // 設定第一贈品選項
+      addOptions(gift2, giftOptions); // 設定第二贈品選項
     } else if (mealType.value === 'meat') {
       extraSection.classList.remove('hidden');
       addOptions(extra, ['板腱牛100克', '牛五花100克', '豬五花100克', '梅花豬100克', '小羔羊100克']);
@@ -113,7 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
     checkConfirmButton();
   });
 
-  [soupBase, soupBase2, mainDish, mainDish2, gift, extra].forEach(select => {
+  // 加入 gift2 的事件監聽
+  [soupBase, soupBase2, mainDish, mainDish2, gift, gift2, extra].forEach(select => {
     select.addEventListener('change', checkConfirmButton);
   });
 
@@ -126,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       main: mainDish.value || null,
       main2: mainDish2.value || null,
       gift: gift.value || null,
+      gift2: gift2.value || null, // 新增 gift2
       extra: extra.value || null,
       id: Date.now()
     };
@@ -146,11 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addOptions(select, options) {
     let defaultText = '請選擇';
-    if (select.id === 'soupBase' || select.id === 'soupBase2') {
+    if (select.id.includes('soup')) {
         defaultText += '湯底';
-    } else if (select.id === 'mainDish' || select.id === 'mainDish2') {
+    } else if (select.id.includes('mainDish')) {
         defaultText += '主食';
-    } else if (select.id === 'gift') {
+    } else if (select.id.includes('gift')) {
         defaultText += '贈品';
     } else {
         defaultText += '兌換選項';
@@ -173,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainDish.disabled = false;
     mainDish2.innerHTML = '<option value="">請選擇主食</option>';
     gift.innerHTML = '<option value="">請選擇贈品</option>';
+    gift2.innerHTML = '<option value="">請選擇贈品</option>'; // 重置第二贈品
     extra.innerHTML = '<option value="">請選擇兌換選項</option>';
     hideAllSections();
     confirmBtn.disabled = true;
@@ -184,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainDish.value = '';
     mainDish2.value = '';
     gift.value = '';
+    gift2.value = ''; // 重置第二贈品
     extra.value = '';
   }
 
@@ -193,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainDishSection.classList.add('hidden');
     mainDish2Section.classList.add('hidden');
     giftSection.classList.add('hidden');
+    gift2Section.classList.add('hidden'); // 隱藏第二贈品
     extraSection.classList.add('hidden');
   }
 
@@ -214,7 +225,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (mealType.value === '1988') {
       isValid = isValid && soupBase.value !== '' && soupBase2.value !== '' && gift.value !== '';
     } else if (mealType.value === 'omg_set') {
-      isValid = isValid && soupBase.value !== '' && soupBase2.value !== '' && mainDish.value !== '' && mainDish2.value !== '' && gift.value !== '';
+      // OMG 套餐的確認邏輯，現在需要檢查兩個贈品
+      isValid = isValid && soupBase.value !== '' && soupBase2.value !== '' && mainDish.value !== '' && mainDish2.value !== '' && gift.value !== '' && gift2.value !== '';
     } else if (mealType.value === 'meat') {
       isValid = isValid && extra.value !== '';
     } else if (mealType.value === 'abalone') {
@@ -249,25 +261,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (order.soup) {
             const soupDiv = document.createElement('div');
-            // 移除「一」
             soupDiv.innerHTML = `湯底: <span class="highlight">${order.soup}</span>`;
             li.appendChild(soupDiv);
           }
           if (order.soup2) {
             const soup2Div = document.createElement('div');
-            // 移除「二」
             soup2Div.innerHTML = `湯底: <span class="highlight">${order.soup2}</span>`;
             li.appendChild(soup2Div);
           }
           if (order.main) {
             const mainDiv = document.createElement('div');
-            // 移除「一」
             mainDiv.innerHTML = `主食: <span class="highlight">${order.main}</span>`;
             li.appendChild(mainDiv);
           }
           if (order.main2) {
             const main2Div = document.createElement('div');
-            // 移除「二」
             main2Div.innerHTML = `主食: <span class="highlight">${order.main2}</span>`;
             li.appendChild(main2Div);
           }
@@ -275,6 +283,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const giftDiv = document.createElement('div');
             giftDiv.innerHTML = `贈品: <span class="highlight">${order.gift}</span>`;
             li.appendChild(giftDiv);
+          }
+          // 新增渲染第二贈品的邏輯
+          if (order.gift2) {
+            const gift2Div = document.createElement('div');
+            gift2Div.innerHTML = `贈品: <span class="highlight">${order.gift2}</span>`;
+            li.appendChild(gift2Div);
           }
           if (order.extra) {
             const extraDiv = document.createElement('div');
